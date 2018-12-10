@@ -1,0 +1,11 @@
+---
+- hosts: loadbalancer
+  tasks:
+    - name: Install mysql-server
+      yum: name="{{ packages }}" state=present update_cache=yes
+      vars:
+       packages:
+         - http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+         - mysql-server
+    - name: Ensure mysql running
+      service: name=mysqld state=started enabled=yes

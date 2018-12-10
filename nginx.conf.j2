@@ -1,0 +1,6 @@
+upstream demo {
+{% for server in groups.webserv %}
+    server {{ server }};
+{% endfor %}
+}
+

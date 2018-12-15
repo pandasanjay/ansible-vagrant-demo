@@ -39,7 +39,7 @@
       notify: restart apache2
 
     - name: setup pip env
-      pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv virtualenv_python=python3.5
+      pip: requirements=/var/www/demo/requirements.txt virtualenv=/var/www/demo/.venv
       notify: restart apache2
 
  

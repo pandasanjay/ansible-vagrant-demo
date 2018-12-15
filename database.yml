@@ -1,5 +1,5 @@
 ---
-- hosts: loadbalancer
+- hosts: databases
   tasks:
     - name: Install mysql-server
       yum: name="{{ packages }}" state=present update_cache=yes

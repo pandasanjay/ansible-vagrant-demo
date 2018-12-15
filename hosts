@@ -1,5 +1,10 @@
 [webserv]
-webserver
+webserver-1
+webserver-2
+webserver-3
+
+[databases]
+db0
 
 [loadbalanc]
 loadbalancer

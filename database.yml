@@ -7,5 +7,13 @@
        packages:
          - http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
          - mysql-server
+
     - name: Ensure mysql running
       service: name=mysqld state=started enabled=yes
+    
+    - name: Ensure mysql listening on all port
+      lineinfile: dest=/etc/mysql/my.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+      notify: restart mysql
+  handlers:
+    - name: restart mysql
+      service: name=mysql status=restarted

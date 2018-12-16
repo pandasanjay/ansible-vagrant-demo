@@ -1,5 +1,12 @@
 ---
-- include: controle.yml
+- hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: update yum cache
+      yum: name='*' update_cache=yes 
+
+- include: control.yml
 - include: database.yml
 - include: webserver.yml
 - include: loadbalancer.yml

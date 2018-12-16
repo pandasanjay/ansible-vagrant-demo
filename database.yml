@@ -2,4 +2,7 @@
 - hosts: databases
   become: true
   roles:
-   - database
+   - role: database 
+     db_username: "{{ db_user }}" 
+     db_password: "{{ vault_db_pass }}"
+     db_host: "%"

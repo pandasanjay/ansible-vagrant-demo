@@ -3,7 +3,7 @@
    yum: name=epel-release                                                               
                                                                                         
  - name: install web component                                                          
-   yum: name="{{ item }}" state=present update_cache=yes enablerepo=epel            
+   yum: name="{{ item }}" state=present enablerepo=epel            
    with_items:                                                                          
        - httpd                                                                          
        - mod_wsgi                                                                       

@@ -1,2 +1,5 @@
 ---
-# defaults file for database
+db_name: myapp
+db_username: myuser
+db_password: DefaultPass1234
+db_host: localhost

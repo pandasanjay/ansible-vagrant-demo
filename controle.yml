@@ -1,10 +1,5 @@
 ---
-- hosts: controle
+- hosts: control
   become: true
-  tasks:
-    - name: install tooles
-      yum: name="{{ packages }}" state=present update_cache=yes
-      vars:
-        packages:
-          - curl
-          - python-httplib2
+  roles:
+    - control

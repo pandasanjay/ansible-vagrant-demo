@@ -1,0 +1,13 @@
+---
+ - name: install epel                                                                   
+   yum: name=epel-release                                                               
+                                                                                        
+ - name: install web component                                                          
+   yum: name="{{ item }}" state=present update_cache=yes enablerepo=epel            
+   with_items:                                                                          
+       - httpd                                                                          
+       - mod_wsgi                                                                       
+       - python-pip                                                                     
+       - python-virtualenv                                                              
+       - MySQL-python                                                                   
+                                                                                        

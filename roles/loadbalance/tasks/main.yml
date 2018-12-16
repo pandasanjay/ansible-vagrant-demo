@@ -1,0 +1,26 @@
+---
+   - name: install epel
+     yum: name=epel-release
+
+   - name: install tools
+     yum: name="{{ item }}" state=present update_cache=yes
+     with_items:
+       - python-httplib2
+
+   - name: install nginx
+     yum:
+       name: nginx
+       enablerepo: "epel"
+       state: present
+       update_cache: yes
+
+   - name: ansure nginx service started
+     service: name=nginx state=started enabled=yes
+
+   - name: create nginx config file and put this in site-available
+     template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/demo.conf mode=0644
+     notify: restart nginx
+
+   - name: vhost config in nginx
+     copy: src=nginx_demo.conf dest=/etc/nginx/default.d/demo.conf mode=0755
+     notify: restart nginx

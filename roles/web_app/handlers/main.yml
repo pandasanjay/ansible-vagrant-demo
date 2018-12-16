@@ -1,0 +1,7 @@
+---
+    - name: restart apache2
+      service: name=httpd state=restarted
+    - name: restart the firewall changes
+      service:
+        name: firewalld
+        state: restarted

@@ -1,19 +1,27 @@
 ---
 - hosts: databases
+  become: true
   tasks:
     - name: Install mysql-server
       yum: name="{{ packages }}" state=present update_cache=yes
       vars:
        packages:
-         - http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+         - https://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm
          - mysql-server
+         - MySQL-python
 
     - name: Ensure mysql running
       service: name=mysqld state=started enabled=yes
     
     - name: Ensure mysql listening on all port
-      lineinfile: dest=/etc/mysql/my.cnf regexp=^bind-address line="bind-address = 0.0.0.0"
+      lineinfile: dest=/etc/my.cnf regexp=^bind-address line="bind-address=0.0.0.0"
       notify: restart mysql
+    - name: Create a database
+      mysql_db: name=demo state=present
+
+    - name: Create user in mysql
+      mysql_user: name=demo password=S@nj@y1234 priv=demo.*:ALL host='%' state=present
+
   handlers:
     - name: restart mysql
-      service: name=mysql status=restarted
+      service: name=mysqld state=restarted

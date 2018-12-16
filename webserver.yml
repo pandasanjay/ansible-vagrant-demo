@@ -13,6 +13,7 @@
           - mod_wsgi
           - python-pip
           - python-virtualenv
+          - MySQL-python
 
     - name: ensure httpd is running     
       service:       

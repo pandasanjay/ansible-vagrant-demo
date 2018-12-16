@@ -1,0 +1,54 @@
+---
+- hosts: loadbalancer
+  become: true
+  tasks:
+    - name: Check nginex working
+      command: systemctl status nginx
+
+    - name: Check nginex port working
+      wait_for: port=80 timeout=1
+
+- hosts: webserv
+  become: true
+  tasks:
+    - name: Check apache2 working
+      command: systemctl status httpd
+
+    - name: Check apache2 port
+      wait_for: port=80 timeout=1
+
+- hosts: databases
+  become: true
+  tasks:
+    - name: Check mysql working
+      command: systemctl status mysqld
+    
+    - name: Check mysql port working
+      wait_for: port=3306 timeout=1
+
+
+- hosts: controle
+  become: true
+  tasks:
+    - name: veryfy end-to-end response
+      uri: url=http://{{item}} return_content=yes
+      with_items: 
+        - "{{ groups.loadbalanc }}"
+      register: lb_index
+
+    - fail: msg="index failed to load"
+      when: "'Hello, from sunny' not in item.content"
+      with_items: "{{ lb_index.results }}"
+
+- hosts: loadbalanc
+  become: true
+  tasks:
+    - name: veryfy end-to-end response
+      uri: url=http://{{item}} return_content=yes
+      with_items:
+        - "{{ groups.webserv }}"
+      register: app_index
+
+    - fail: msg="index failed to load"
+      when: "'Hello, from sunny {{ item.item }}!' not in item.content"
+      with_items: "{{ app_index.results }}"

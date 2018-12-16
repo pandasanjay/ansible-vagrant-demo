@@ -8,3 +8,6 @@ db0
 
 [loadbalanc]
 loadbalancer
+
+[controle]
+ansible ansible_connection=local
